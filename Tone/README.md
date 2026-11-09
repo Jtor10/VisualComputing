@@ -45,7 +45,6 @@ El programa final permite visualizar claramente por qué necesitamos el Tone Map
 *   **Bloom:** El paso natural siguiente es implementar un desenfoque de los píxeles más brillantes (Bloom).
 *   **Interfaz Gráfica (ImGui):** Reemplazar el control por teclado por un panel de *Sliders* reales en pantalla, tal como se ve en la página del curso.
 
----
 
 ## 5. Manual de Uso y Compilación
 
@@ -84,9 +83,13 @@ XDG_SESSION_TYPE=x11 ./tone foto.jpg
 | **R** | Resetear todos los valores |
 | **ESC** | Cerrar la ventana |
 
-## 7. Referencias
+## 7. Uso de Inteligencia Artificial en el Desarrollo
 
-1. **Material del curso:** Imaging - Tone* (Notebook de Computación Visual). Código base y teoría de los operadores.
+Durante la construcción de este proyecto, se uso un asistente de Inteligencia Artificial Deepseek como una herramienta de apoyo para la traducción de conceptos, la depuración de errores y la comprensión profunda de la API de OpenGL en C++. Es fundamental destacar que la IA no reemplazó el entendimiento del alumno, la teoría necesaria (Tone Mapping, operadores ACES/Reinhard, y la escena sintética) provino directamente del material del curso y fue estudiada previamente.
+
+## 8. Referencias
+
+1. Charalambos, J. P. Visual Computing Notebook. https://visualcomputing.github.io/docs/
 2. **Poly Haven** (https://polyhaven.com/): Fuente de las imágenes HDRI (`.hdr`) utilizadas para probar el alto rango dinámico.
 3. **Reinhard, E., Stark, M., Shirley, P. & Ferwerda, J.** (2002). *Photographic Tone Reproduction for Digital Images*. ACM Transactions on Graphics. (Base matemática del operador Reinhard).
 4. **Narkowicz, K.** (2016). *ACES Filmic Tone Mapping Curve*. (Implementación del ajuste polinomial para ACES).
