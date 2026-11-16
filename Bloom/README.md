@@ -4,15 +4,15 @@ Tras dominar el Tone Mapping (operaciones pointwise), el objetivo aquí fue aden
 
 ## 1. Objetivos
 El objetivo principal fue comprender cómo los desenfoques y la dispersión de la luz afectan la percepción visual. Los objetivos específicos fueron:
-   Comprender el Bloom: Implementar el Bright Pass y Multi-scale Blur en un pipeline HDR.
-   Simulación Médica: Utilizar el Bloom y desenfoques direccionales para emular cómo el ojo humano percibe la luz cuando la córnea o el cristalino presentan anomalías.
+*  Comprender el Bloom: Implementar el Bright Pass y Multi-scale Blur en un pipeline HDR.
+*  Simulación Médica: Utilizar el Bloom y desenfoques direccionales para emular cómo el ojo humano percibe la luz cuando la córnea o el cristalino presentan anomalías.
 
 ## 2. Decisiones de Diseño
-   ¿Por qué HDR? Todo el pipeline trabaja en formato de punto flotante (`RGBA16F`). El Bloom es físicamente imposible en un espacio LDR (0.0 a 1.0), ya que necesita que la lámpara de la escena tenga una intensidad mayor a `1.0` (HDR) para poder obtener los resultados buscados.
-   Bloom vs. Enfermedades Visuales 
-       El Bloom se genera con una pirámide de desenfoques. En lugar de aplicar un desenfoque gigante (debido a la limitación de recursos), extraemos el brillo y lo desenfocamos en 5 niveles de resolución (12, 14, 18, 116, 132). Al sumarlos, se crea un halo suave y de largo alcance.
-       El Astigmatismo se simula con un desenfoque Gaussiano direccional (1D). Las líneas verticales se mantienen nítidas, pero las horizontales se difuminan. Además, simulamos la aberración cromática haciendo que el canal azul se desenfoque más que el rojo.
-       Las Cataratas son una combinación de efectos. Se añade un desenfoque general, se baja el umbral del Bloom a casi `0.0` (creando un velo de luz que baja el contraste), se aplica un tinte amarillento y se generan opacidades procedurales (manchas y rayos radiales).
+
+*   **¿Por qué HDR?:** Todo el pipeline trabaja en formato de punto flotante (`RGBA16F`). El Bloom es físicamente imposible en un espacio LDR (0.0 a 1.0), ya que necesita que la lámpara de la escena tenga una intensidad mayor a `1.0` (HDR) para poder obtener los resultados buscados.
+*   **El Bloom:** Se genera con una pirámide de desenfoques. En lugar de aplicar un desenfoque gigante (debido a la limitación de recursos), extraemos el brillo y lo desenfocamos en 5 niveles de resolución (1/2, 1/4, 1/8, 1/16, 1/32). Al sumarlos, se crea un halo suave y de largo alcance.
+*   **El Astigmatismo:** Se simula con un desenfoque Gaussiano direccional (1D). Las líneas verticales se mantienen nítidas, pero las horizontales se difuminan. Además, simulamos la aberración cromática haciendo que el canal azul se desenfoque más que el rojo.
+*   **Las Cataratas:** Son una combinación de efectos. Se añade un desenfoque general, se baja el umbral del Bloom a casi `0.0` (creando un velo de luz que baja el contraste), se aplica un tinte amarillento y se generan opacidades procedurales (manchas y rayos radiales).
 
 ## 3. Pipeline
 El render se compone de las siguientes etapas ejecutadas en Framebuffers
@@ -23,7 +23,9 @@ El render se compone de las siguientes etapas ejecutadas en Framebuffers
 
 ## 4. Trabajo Futuro
    Diplopía Monocular Simular la visión doble (común en cataratas avanzadas) renderizando la escena dos veces con un pequeño desplazamiento.
+   
    Rayos de Estrella (Starbursts) Añadir patrones de difracción (cruces de luz) alrededor de la lámpara, típicos de lentes sucios o cataratas.
+   
    Animación de Pupila Simular cómo la pupila se contrae (midriasis) al mirar directamente a la lámpara, lo que cambia el nivel de exposición global.
 
 ## 5. Manual de Uso y Compilación
@@ -49,19 +51,19 @@ XDG_SESSION_TYPE=x11 LIBGL_ALWAYS_SOFTWARE=1 .buildbloomvision assetspage.png --
 
 ## 6. Controles de Aplicación
 
- Tecla  Acción 
- ---  --- 
- 1  2  3  ActivarDesactivar Astigmatismo  Catarata  Bloom 
- O  Ver original (visión normal), para comparar 
- L  EncenderApagar la lámpara de la escena 
- ←  →  Girar el eje del astigmatismo (±5°) 
- ↑  ↓  Aumentar  Disminuir la fuerza del astigmatismo 
- Z  X  Disminuir  Aumentar la severidad de la catarata 
- V  B  Disminuir  Aumentar la intensidad del bloom 
- N  M  Bajar  Subir el umbral del bloom (qué tanto brilla) 
- D  E  Bajar  Subir la exposición (stops) 
- Rueda  Arrastrar  Zoom  Mover la página 
- P  R  Esc  Tomar captura (PPM)  Reiniciar  Salir 
+| Tecla | Acción |
+| :--- | :--- |
+| **1 / 2 / 3** | Activar / Desactivar: Astigmatismo / Catarata / Bloom |
+| **O** | visión normal |
+| **L** | Encender / Apagar la lámpara de la escena |
+| **← / →** | Girar el eje del astigmatismo (±5°) |
+| **↑ / ↓** | Aumentar / Disminuir la fuerza del astigmatismo |
+| **Z / X** | Disminuir / Aumentar la severidad de la catarata |
+| **V / B** | Disminuir / Aumentar la intensidad del bloom |
+| **N / M** | Bajar / Subir el umbral del bloom (qué tanto brilla) |
+| **D / E** | Bajar / Subir la exposición (stops) |
+| **Rueda / Arrastrar** | Zoom / Mover la página |
+| **R / Esc** | Reiniciar / Salir |
 
 ## 7. Uso de Inteligencia Artificial en el Desarrollo
 
